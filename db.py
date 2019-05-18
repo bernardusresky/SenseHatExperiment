@@ -7,12 +7,12 @@ class Database:
         self.db = "weather.db"
 
     def make_weather_table(self):
-        weather_table = "CREATE TABLE IF NOT EXISTS weatherData (timestamp datetime, temperature integer, humidity integer, pressure integer, season string)"
+        weather_table = "CREATE TABLE IF NOT EXISTS weatherData (timestamp datetime, temperature integer, humidity integer, pressure integer, season text)"
 
         return weather_table
 
     def make_joystick_table(self):
-        joystick_table = "CREATE TABLE IF NOT EXISTS joystickData (timestamp DATETIME, direction string, action string)"
+        joystick_table = "CREATE TABLE IF NOT EXISTS joystickData (timestamp DATETIME, direction text, action text)"
         return joystick_table
 
     def open_connection(self):
@@ -42,8 +42,7 @@ class Database:
         if conn is not None:
             c = conn.cursor()
             c.execute(query, value)
-            c.commit()
-            c.close()
+            conn.commit()
             self.close_connection(conn)
     
     def get_db(self, query):
@@ -54,14 +53,14 @@ class Database:
             c.fetchall()
     
     def insert_into_weather(self, timestamp, temperature, humidity, pressure, season):
-        query = """INSERT INTO TABLE weatherData (timestamp, temperature, humidity, pressure, season) 
-                            VALUES (?, ?, ?, ?, ?))"""
+        query = """INSERT INTO weatherData(timestamp, temperature, humidity, pressure, season) 
+                            VALUES (?, ?, ?, ?, ?)"""
         value = (timestamp, temperature, humidity, pressure, season)
         self.commit_db(query, value)
   
     def insert_into_joystick(self, timestamp, direction, action):
-        query = """INSERT INTO TABLE joystickData (timestamp, direction, action) 
-                        VALUES (?, ?, ?, ?))"""
+        query = """INSERT INTO joystickData(timestamp, direction, action) 
+                        VALUES (?, ?, ?, ?)"""
         value = (timestamp, direction, action)
         self.commit_db(query, value)
 

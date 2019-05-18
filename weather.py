@@ -12,9 +12,9 @@ class SenseEnv:
 
     def get_env_data(self):
         sense = self.sense
-        temperature = sense.get_temperature()
-        humidity = sense.get_humidity()
-        pressure = sense.get_pressure()
+        temperature = int(sense.get_temperature())
+        humidity = int(sense.get_humidity())
+        pressure = int(sense.get_pressure())
 
         return temperature, humidity, pressure
 
@@ -27,7 +27,7 @@ class SenseEnv:
             timestamp = time.strftime('%m-%d-%Y %H-%M-%S')
             date = time.strftime('%m-%d')
             season = self.season_checker(date)
-            db.insert_into_weather(timestamp, int(temperature), int(humidity), int(pressure), season)
+            db.insert_into_weather(timestamp, temperature, humidity, pressure, season)
 
     def season_checker(self, date):
         if (date >= 12-1 and date <= 2-28):
