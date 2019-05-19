@@ -1,10 +1,11 @@
 from data_virtualization import GraphVirtualization
 from graphic import Graph
+import sys
 
 class Menu():
 
     def __init__(self):
-        self.keyboardInt = KeyboardInterrupt
+        self.keyboardInt = KeyboardInterrupt, EOFError
         self.dv = GraphVirtualization()
         self.mb = Graph()
 
@@ -69,6 +70,7 @@ class Menu():
             elif(userInput == "4"):
                 #When user input 3 it will exit the program
                 print("\n -------------- Good Bye -------------------")
+                sys.exit()
                 break
             elif(userInput == self.keyboardInt):
                 print("\n Exit program because of keyboard interruption!!")
@@ -81,7 +83,7 @@ class Menu():
             print(("-" * 10) + "Please choose the type of chart that you want to see" + ("-" *10))
             print("1. Line Chart")
             print("2. Bar Chart")
-            print("3. Scatter")
+            print("3. Scatter(temperature vs humidity)")
             print("4. Multiple Charts")
             print("5. Back to main menu")
             print("6. Exit Program")
@@ -97,8 +99,7 @@ class Menu():
                 graph = "bar"
                 self.columMenu(results, graph)
             elif(userInput == "3"):
-                graph = "scatter"
-                self.columMenu(results, graph)
+                self.mb.scatter_plot(results)
             elif(userInput == "4"):
                 graph = "multiple"
                 self.columMenu(results, graph)
@@ -107,7 +108,7 @@ class Menu():
             elif(userInput == "6"):
                 #When user input 6 it will exit the program
                 print("\n -------------- Good Bye -------------------")
-                break
+                sys.exit()
             elif(userInput == self.keyboardInt):
                 print("\n Exit program because of keyboard interruption!!")
             else:
@@ -141,7 +142,7 @@ class Menu():
             elif(userInput == "6"):
                 #When user input 6 it will exit the program
                 print("\n -------------- Good Bye -------------------")
-                break
+                sys.exit()
             elif(userInput == self.keyboardInt):
                 print("\n Exit program because of keyboard interruption!!")
             else:
@@ -169,20 +170,21 @@ class Menu():
                 self.mb.bar_plot(results, 'Humidity(%)')
             elif userInput == "3" and g == "bar":
                 self.mb.bar_plot(results, 'Pressure')
-            elif userInput == "1" and g == "scatter":
-                self.mb.scatter_plot(results, 'Temperature(C)')
-            elif userInput == "2" and g == "scatter":
-                self.mb.scatter_plot(results, 'Humidity(%)')
-            elif userInput == "3" and g == "scatter":
-                self.mb.scatter_plot(results, 'Pressure')
+            elif userInput == "1" and g == "multiple":
+                self.mb.multiple_plot(results)
+            elif userInput == "2" and g == "multiple":
+                self.mb.multiple_plot(results)
+            elif userInput == "3" and g == "multiple":
+                self.mb.multiple_plot(results)
             elif userInput == "4" and g == "multiple":
                 self.mb.multiple_plot(results)
             elif(userInput == "5"):
                 #When user input 6 it will exit the program
                 print("\n -------------- Good Bye -------------------")
-                break
+                sys.exit()                
             elif(userInput == self.keyboardInt):
                 print("\n Exit program because of keyboard interruption!!")
+                sys.exit()
             else:
                 print("Not withing choice range")
    

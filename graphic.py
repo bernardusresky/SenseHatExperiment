@@ -46,12 +46,12 @@ class Graph():
         plt.show()
         #self.save_prompt()
 
-    def scatter_plot(self, data, y):
+    def scatter_plot(self, data):
         datas = data
-        datas.plot(kind='scatter',x='Timestamp',y= y, color ='blue', legend= str(y))
+        datas.plot(kind='scatter',x='Temperature(C)',y= 'Humidity(%)', color ='red')
         plt.show()
         #self.save_prompt()
 
     def multiple_plot(self, data):
-        pass
+        print("coming soon. Postponed for now as i need to make website project for company")
             
