@@ -51,8 +51,6 @@ class Database:
             c = conn.cursor()
             c.execute(query)
             rows = c.fetchall()
-            for row in rows:
-                print(row)
             return rows
 
     def insert_into_weather(self, timestamp, temperature, humidity, pressure, status):
@@ -67,9 +65,21 @@ class Database:
         value = (timestamp, direction, action)
         self.commit_db(query, value)
     
-    def get_weather(self):
-        query = "SELECT * FROM weatherData"
-        self.get_db(query)
+    def get_weather(self, time):
+        if time == 30:
+            query = "SELECT * FROM weatherData WHERE timestamp > datetime('now', '-1 month')"
+            results = self.get_db(query)       
+            return results
+        elif time == 7:
+            query = "SELECT * FROM weatherData WHERE timestamp > datetime('now', '-7 day')"
+            results = self.get_db(query)       
+            return results
+        elif time == 1:
+            query = "SELECT * FROM weatherData WHERE timestamp > datetime('now', '-1 day')"
+            results = self.get_db(query)       
+            return results
+        else:
+            print("Not inside choice range")
 
 def main():
     db = Database()
