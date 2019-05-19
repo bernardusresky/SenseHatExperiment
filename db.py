@@ -7,7 +7,7 @@ class Database:
         self.db = "weather.db"
 
     def make_weather_table(self):
-        weather_table = "CREATE TABLE IF NOT EXISTS weatherData (timestamp datetime, temperature integer, humidity integer, pressure integer, season text)"
+        weather_table = "CREATE TABLE IF NOT EXISTS weatherData (timestamp datetime, temperature integer, humidity integer, pressure integer, status text)"
 
         return weather_table
 
@@ -50,12 +50,15 @@ class Database:
         if conn is not None:
             c = conn.cursor()
             c.execute(query)
-            c.fetchall()
-    
-    def insert_into_weather(self, timestamp, temperature, humidity, pressure, season):
-        query = """INSERT INTO weatherData(timestamp, temperature, humidity, pressure, season) 
+            rows = c.fetchall()
+            for row in rows:
+                print(row)
+            return rows
+
+    def insert_into_weather(self, timestamp, temperature, humidity, pressure, status):
+        query = """INSERT INTO weatherData(timestamp, temperature, humidity, pressure, status) 
                             VALUES (?, ?, ?, ?, ?)"""
-        value = (timestamp, temperature, humidity, pressure, season)
+        value = (timestamp, temperature, humidity, pressure, status)
         self.commit_db(query, value)
   
     def insert_into_joystick(self, timestamp, direction, action):
@@ -63,6 +66,10 @@ class Database:
                         VALUES (?, ?, ?, ?)"""
         value = (timestamp, direction, action)
         self.commit_db(query, value)
+    
+    def get_weather(self):
+        query = "SELECT * FROM weatherData"
+        self.get_db(query)
 
 def main():
     db = Database()
